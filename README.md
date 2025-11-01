@@ -20,7 +20,7 @@ O sistema tem como objetivo informatizar o controle de uma padaria, permitindo o
 
 ## :gear: Tecnologias utilizadas
 
-- :coffee: **Java SE 17+**
+- :coffee: **Java**
 - :file_cabinet: **MySQL** (via **XAMPP**)
 - :link: **JDBC (MySQL Connector/J)**
 - :bricks: **Paradigma de Programação Orientada a Objetos**
