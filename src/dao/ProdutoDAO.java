@@ -72,4 +72,21 @@ public class ProdutoDAO {
         }
         return produtos;
     }
+
+    public boolean exculir(Integer id){
+        String sql = "DELETE FROM produto WHERE id_produto = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao excluir produto: " + e.getMessage());
+            return false;
+        }
+    }
 }
