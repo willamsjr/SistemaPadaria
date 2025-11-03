@@ -50,6 +50,30 @@ public class ProdutoDAO {
         }
     }
 
+    public Produto buscarPorId(Integer id) {
+        String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto WHERE id_produto = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Produto produto = new Produto();
+                    produto.setId(rs.getInt("id_produto"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setPreco(rs.getBigDecimal("preco"));
+                    produto.setQntEstoque(rs.getInt("qnt_estoque"));
+                    return produto;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
+        }
+        return null;
+    }
+
     public List<Produto> buscarTodos() {
         String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto";
         List<Produto> produtos = new ArrayList<>();
