@@ -57,4 +57,29 @@ public class ClienteDAO {
         }
         return null;
     }
+
+    public Cliente buscarPorId(Integer id) {
+        String sql = "SELECT id_cliente, nome, telefone, cpf, endereco FROM cliente WHERE id_cliente = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Cliente cliente = new Cliente();
+                    cliente.setId(rs.getInt("id_cliente"));
+                    cliente.setNome(rs.getString("nome"));
+                    cliente.setTelefone(rs.getString("telefone"));
+                    cliente.setCpf(rs.getString("cpf"));
+                    cliente.setEndereco(rs.getString("endereco"));
+                    return cliente;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar cliente por ID: " + e.getMessage());
+        }
+        return null;
+    }
 }
