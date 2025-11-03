@@ -11,26 +11,26 @@ import model.Funcionario;
 public class FuncionarioDAO {
 
     public Funcionario autenticar(String login, String senhaHash) {
-        return null;
-    }
-
-    public boolean cadastrar(Funcionario funcionario) {
-        String sql = "INSERT INTO funcionario (nome, login, senha) VALUES (?, ?, ?)";
+        String sql = "SELECT id_func, nome, login FROM funcionario WHERE login = ? AND senha = ?";
 
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, funcionario.getNome());
-            stmt.setString(2, funcionario.getLogin());
-            stmt.setString(3, funcionario.getSenhaHash());
+            stmt.setString(1, login);
+            stmt.setString(2, senhaHash);
 
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
-
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Funcionario funcionario = new Funcionario();
+                    funcionario.setId(rs.getInt("id_func"));
+                    funcionario.setNome(rs.getString("nome"));
+                    funcionario.setLogin(rs.getString("login"));
+                    return funcionario;
+                }
+            }
         } catch (SQLException e) {
-            System.err.println("Erro ao cadastrar funcionário: " + e.getMessage());
-            e.printStackTrace();
-            return false;
+            System.err.println("Erro ao autenticar funcionário: " + e.getMessage());
         }
+        return null;
     }
 }
