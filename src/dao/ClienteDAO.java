@@ -57,4 +57,24 @@ public class ClienteDAO {
         }
         return null;
     }
+
+    public boolean atualizar(Cliente cliente) {
+        String sql = "UPDATE cliente SET nome = ?, telefone = ?, cpf = ?, endereco = ? WHERE id_cliente = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getTelefone());
+            stmt.setString(3, cliente.getCpf());
+            stmt.setString(4, cliente.getEndereco());
+            stmt.setInt(5, cliente.getId());
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar cliente: " + e.getMessage());
+            return false;
+        }
+    }
 }
