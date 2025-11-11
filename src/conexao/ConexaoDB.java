@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDB {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/?user=root";
-    private static final String USER = "root@127.0.0.1:3306";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/padaria";
+    private static final String USER = "root";
     private static final String PASSWORD = "1234";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root", "root@127.0.0.1:3306", "1234");
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/padaria", "root", "1234");
         } catch (ClassNotFoundException e) {
             System.err.println("Erro: Driver JDBC do MySQL não encontrado. Verifique seu arquivo .jar.");
             e.printStackTrace();
