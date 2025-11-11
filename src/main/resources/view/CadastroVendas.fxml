@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="620.0" prefWidth="1010.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastroVendasController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label layoutX="30.0" layoutY="30.0" text="Cadastro de Vendas">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <VBox layoutX="30.0" layoutY="80.0" spacing="20.0">
+
+            <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                <VBox>
+                    <Label text="CPF do Cliente (Opcional)" />
+                    <TextField fx:id="txtClienteCPF" prefWidth="200.0" promptText="Buscar por CPF" />
+                </VBox>
+                <Button fx:id="btnBuscarCliente" mnemonicParsing="false" text="Buscar" />
+                <Label fx:id="lblNomeCliente" textFill="GREEN">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                    <HBox.margin><Insets left="10.0" /></HBox.margin>
+                </Label>
+            </HBox>
+
+            <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                <VBox>
+                    <Label text="ID ou Nome do Produto" />
+                    <TextField fx:id="txtProdutoBusca" prefWidth="250.0" promptText="Buscar produto..." />
+                </VBox>
+                <VBox>
+                    <Label text="Qtd." />
+                    <TextField fx:id="txtProdutoQtd" prefWidth="60.0" text="1" />
+                </VBox>
+                <Button fx:id="btnAdicionarItem" mnemonicParsing="false" text="Adicionar Item" />
+            </HBox>
+        </VBox>
+
+        <TableView fx:id="tblItensVenda" layoutX="30.0" layoutY="240.0" prefHeight="300.0" prefWidth="950.0">
+            <columns>
+                <TableColumn fx:id="colProdutoNome" prefWidth="400.0" text="Produto" />
+                <TableColumn fx:id="colProdutoQtd" prefWidth="100.0" text="Quantidade" />
+                <TableColumn fx:id="colProdutoPrecoUnit" prefWidth="150.0" text="Preço Unit." />
+                <TableColumn fx:id="colProdutoPrecoTotal" prefWidth="150.0" text="Total Item" />
+                <TableColumn fx:id="colAcoes" prefWidth="150.0" text="Ações" />
+            </columns>
+        </TableView>
+
+        <VBox alignment="TOP_RIGHT" layoutX="680.0" layoutY="550.0" spacing="10.0">
+            <Label fx:id="lblTotalVenda" text="TOTAL: R$ 0,00">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+            </Label>
+            <Button fx:id="btnFinalizarVenda" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #27ae60;" text="FINALIZAR VENDA" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Button>
+        </VBox>
+
+    </children>
+</AnchorPane>

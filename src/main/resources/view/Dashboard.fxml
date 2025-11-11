@@ -49,7 +49,7 @@
     </left>
 
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="mainContentPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
             <padding>
                 <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
             </padding>
