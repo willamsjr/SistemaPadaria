@@ -8,6 +8,9 @@ import java.sql.Statement;
 import conexao.ConexaoDB;
 import model.Venda;
 import model.Item_venda;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VendaDAO {
@@ -115,5 +118,51 @@ public class VendaDAO {
             }
             return true;
         }
+    }
+
+    public List<Venda> buscarTodasVendas() {
+        String sql = "SELECT id_venda, id_cliente, id_funcionario, data, valor_total FROM venda ORDER BY data DESC";
+        return buscarVendasPorQuery(sql);
+    }
+
+    public List<Venda> buscarVendasPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        String sql = "SELECT id_venda, id_cliente, id_funcionario, data, valor_total FROM venda WHERE data BETWEEN ? AND ? ORDER BY data DESC";
+        return buscarVendasPorQuery(sql, inicio, fim);
+    }
+
+
+    // Método Auxiliar para mapear o ResultSet
+    private List<Venda> buscarVendasPorQuery(String sql, Object... params) {
+        List<Venda> vendas = new ArrayList<>();
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            if (params.length > 0) {
+                for (int i = 0; i < params.length; i++) {
+                    if (params[i] instanceof LocalDateTime) {
+                        stmt.setTimestamp(i + 1, java.sql.Timestamp.valueOf((LocalDateTime) params[i]));
+                    } else {
+                        stmt.setObject(i + 1, params[i]);
+                    }
+                }
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Venda venda = new Venda();
+                    venda.setId(rs.getInt("id_venda"));
+                    venda.setIdCliente(rs.getInt("id_cliente"));
+                    venda.setIdFuncionario(rs.getInt("id_funcionario"));
+                    venda.setData(rs.getTimestamp("data").toLocalDateTime());
+                    venda.setValorTotal(rs.getBigDecimal("valor_total"));
+                    vendas.add(venda);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar vendas: " + e.getMessage());
+        }
+        return vendas;
     }
 }
