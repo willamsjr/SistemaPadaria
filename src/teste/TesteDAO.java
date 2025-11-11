@@ -25,17 +25,15 @@ public class TesteDAO {
         final int ID_CLIENTE_TESTE = 1;
         final int ID_PRODUTO_EXISTENTE = 4;
         final int QNT_ESTOQUE_INSUFICIENTE = 9999;
-        // --------------------------------------------------------
 
         ProdutoDAO produtoDAO = new ProdutoDAO();
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
         VendaDAO vendaDAO = new VendaDAO();
 
-        // --- 1. Testando Cadastro de Funcionário
+        // --- 1. Testando Cadastro de Funcionário ---
         Funcionario func = new Funcionario();
         func.setNome("Ana Maria Silva");
-        // Adiciona um sufixo para evitar erro de 'Duplicate Entry'
         func.setLogin("ana.vendas" + System.currentTimeMillis());
         func.setSenhaHash("senha123");
 
@@ -46,7 +44,7 @@ public class TesteDAO {
             System.err.println("[ERRO] FALHA: Erro ao cadastrar funcionário.");
         }
 
-        // --- 2. Testando Cadastro de Cliente
+        // --- 2. Testando Cadastro de Cliente  ---
         Cliente cliente = new Cliente();
         cliente.setNome("Joao da Silva");
         cliente.setTelefone("79998887766");
@@ -60,7 +58,7 @@ public class TesteDAO {
             System.err.println("[ERRO] FALHA: Erro ao cadastrar cliente.");
         }
 
-        // --- 3. Testando Cadastro de Produto
+        // --- 3. Testando Cadastro de Produto  ---
         Produto pao = new Produto();
         pao.setNome("Pao Frances Teste Venda");
         pao.setPreco(new BigDecimal("0.75"));
@@ -73,7 +71,7 @@ public class TesteDAO {
             System.err.println("[ERRO] FALHA: Erro ao cadastrar produto.");
         }
 
-        // --- 4. Testando Consulta de Produtos
+        // --- 4. Testando Consulta de Produtos ---
         System.out.println("\n--- 4. Testando Consulta de Produtos ---");
         List<Produto> produtos = produtoDAO.buscarTodos();
         if (!produtos.isEmpty()) {
@@ -84,7 +82,7 @@ public class TesteDAO {
 
         System.out.println("=============================================");
 
-        // --- VERIFICAÇÃO DE ESTOQUE INICIAL PARA TESTE DE VENDA
+        // --- INÍCIO DOS TESTES DE TRANSAÇÃO  ---
 
         Produto produtoInicial = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
         if (produtoInicial == null) {
@@ -94,13 +92,13 @@ public class TesteDAO {
         System.out.println(">>> Estoque inicial do Produto ID " + ID_PRODUTO_EXISTENTE + ": " + produtoInicial.getQntEstoque());
 
 
-        // --- 5. Testando Transação de Venda (Cenário de SUCESSO - COMMIT) ---
+        // --- 5. Testando Transação de Venda ---
 
         Venda vendaSucesso = new Venda();
         vendaSucesso.setIdFuncionario(ID_FUNCIONARIO_TESTE);
         vendaSucesso.setIdCliente(ID_CLIENTE_TESTE);
         vendaSucesso.setData(LocalDateTime.now());
-        vendaSucesso.setValorTotal(new BigDecimal("3.75")); // 5 * 0.75
+        vendaSucesso.setValorTotal(new BigDecimal("3.75"));
 
         List<Item_venda> itensSucesso = new ArrayList<>();
         itensSucesso.add(new Item_venda(null, ID_PRODUTO_EXISTENTE, 5, new BigDecimal("0.75")));
@@ -151,6 +149,34 @@ public class TesteDAO {
 
         } else {
             System.err.println("[ERRO] FALHA CRÍTICA: A venda de falha NÃO deveria ter sido registrada.");
+        }
+
+        // --- INÍCIO DOS TESTES DE RELATÓRIO  ---
+
+        System.out.println("\n--- 7. Teste de Relatório - Buscar Todas as Vendas ---");
+        List<Venda> todasVendas = vendaDAO.buscarTodasVendas();
+
+        if (!todasVendas.isEmpty()) {
+            System.out.println("[OK] SUCESSO: Total de Vendas encontradas: " + todasVendas.size());
+            Venda ultimaVenda = todasVendas.get(0);
+            System.out.println("  -> Última Venda ID: " + ultimaVenda.getId() +
+                    ", Data: " + ultimaVenda.getData().toLocalDate() +
+                    ", Total: R$ " + ultimaVenda.getValorTotal());
+        } else {
+            System.err.println("[AVISO] FALHA: Nenhuma venda encontrada para o relatório. (Pode ser ignorado se for a primeira execução).");
+        }
+
+        System.out.println("\n--- 8. Teste de Relatório - Vendas por Período ---");
+
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime ontem = agora.minusDays(1);
+
+        List<Venda> vendasHoje = vendaDAO.buscarVendasPorPeriodo(ontem, agora);
+
+        if (!vendasHoje.isEmpty()) {
+            System.out.println("[OK] SUCESSO: Vendas encontradas nas últimas 24h: " + vendasHoje.size());
+        } else {
+            System.out.println("[AVISO] Nenhuma venda encontrada nas últimas 24h. O teste de período funciona, mas verifique as datas.");
         }
 
 
