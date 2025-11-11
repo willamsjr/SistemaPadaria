@@ -15,7 +15,7 @@ public class FuncionarioDAO {
     }
 
     public boolean cadastrar(Funcionario funcionario) {
-        String sql = "INSERT INTO funcionario (nome, login, senha) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO funcionario (nome, login, senha_hash) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
