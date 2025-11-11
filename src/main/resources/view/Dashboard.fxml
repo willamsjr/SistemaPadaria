@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+
+    <left>
+        <VBox prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: #800000;" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" prefHeight="100.0" prefWidth="250.0" text="Delícias Do Trigo" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <Button fx:id="btnDashboard" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Dashboard" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="btnCadastroVendas" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Cadastro De Vendas" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Button>
+                <Button fx:id="btnEstoque" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Estoque" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Button>
+                <Button fx:id="btnRelatorios" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Relatórios" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Button>
+                <Button fx:id="btnAgendamento" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Agendamento" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Button>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <Button fx:id="btnSair" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #F39C12; -fx-background-radius: 0;" text="Sair" textFill="WHITE">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+            </padding>
+            <children>
+                <Label text="Dashboard" layoutX="30.0" layoutY="30.0">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+
+                <FlowPane hgap="20.0" vgap="20.0" layoutX="30.0" layoutY="80.0" prefHeight="500.0" prefWidth="970.0">
+                    <children>
+
+                        <VBox alignment="TOP_LEFT" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.0, 0, 2);">
+                            <padding>
+                                <Insets top="20.0" left="20.0" right="20.0" bottom="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Vendas Hoje" textFill="#555555">
+                                    <font><Font size="14.0" /></font>
+                                </Label>
+                                <Label text="R$ 1.237,52" textFill="#2d2d2d">
+                                    <font><Font name="System Bold" size="28.0" /></font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <VBox alignment="TOP_LEFT" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.0, 0, 2);">
+                            <padding>
+                                <Insets top="20.0" left="20.0" right="20.0" bottom="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="Pedidos Hoje" textFill="#555555">
+                                    <font><Font size="14.0" /></font>
+                                </Label>
+                                <Label text="54" textFill="#2d2d2d">
+                                    <font><Font name="System Bold" size="28.0" /></font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                    </children>
+                </FlowPane>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

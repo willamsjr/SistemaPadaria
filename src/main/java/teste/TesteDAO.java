@@ -34,12 +34,23 @@ public class TesteDAO {
         // --- 1. Testando Cadastro de Funcionário ---
         Funcionario func = new Funcionario();
         func.setNome("Ana Maria Silva");
-        func.setLogin("ana.vendas" + System.currentTimeMillis());
-        func.setSenhaHash("senha123");
+
+        String emailDeTeste = "ana.vendas" + System.currentTimeMillis() + "@email.com";
+        String senhaDeTeste = "senha123";
+
+        func.setLogin(emailDeTeste);
+        func.setSenhaHash(senhaDeTeste);
+
 
         System.out.println("\n--- 1. Testando Cadastro de Funcionário ---");
         if (funcionarioDAO.cadastrar(func)) {
             System.out.println("[OK] SUCESSO: Funcionário cadastrado.");
+
+            System.out.println("==============================================");
+            System.out.println(">>> USE ESTE EMAIL PARA LOGAR: " + emailDeTeste);
+            System.out.println(">>> USE ESTA SENHA PARA LOGAR: " + senhaDeTeste);
+            System.out.println("==============================================");
+
         } else {
             System.err.println("[ERRO] FALHA: Erro ao cadastrar funcionário.");
         }
@@ -82,7 +93,6 @@ public class TesteDAO {
 
         System.out.println("=============================================");
 
-        // --- INÍCIO DOS TESTES DE TRANSAÇÃO  ---
 
         Produto produtoInicial = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
         if (produtoInicial == null) {
@@ -151,7 +161,6 @@ public class TesteDAO {
             System.err.println("[ERRO] FALHA CRÍTICA: A venda de falha NÃO deveria ter sido registrada.");
         }
 
-        // --- INÍCIO DOS TESTES DE RELATÓRIO  ---
 
         System.out.println("\n--- 7. Teste de Relatório - Buscar Todas as Vendas ---");
         List<Venda> todasVendas = vendaDAO.buscarTodasVendas();
