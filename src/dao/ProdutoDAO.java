@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class ProdutoDAO {
 
     public Produto buscarPorId(int id) {
-        String sql = "SELECT id, nome, preco, qntEstoque FROM produto WHERE id = ?";
+        String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto WHERE id_produto = ?";
         Produto produto = null;
 
         try (Connection conn = ConexaoDB.getConnection();
@@ -38,7 +38,7 @@ public class ProdutoDAO {
     }
 
     public boolean decrementarEstoque(int id_produto, int quantidade) {
-        String sql = "UPDATE produto SET qntEstoque = qntEstoque - ? WHERE id = ? AND qntEstoque >= ?";
+        String sql = "UPDATE produto SET qnt_estoque = qnt_estoque - ? WHERE id_produto = ? AND qnt_estoque >= ?";
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, quantidade);
@@ -51,10 +51,10 @@ public class ProdutoDAO {
             return false;
         }
     }
-    
+
 
     public boolean cadastrar(Produto produto) {
-        String sql = "INSERT INTO produto (nome, preco, qntEstoque) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produto (nome, preco, qnt_estoque) VALUES (?, ?, ?)";
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());
@@ -69,7 +69,7 @@ public class ProdutoDAO {
     }
 
     public List<Produto> buscarTodos() {
-        String sql = "SELECT id, nome, preco, qntEstoque FROM produto";
+        String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto";
         List<Produto> produtos = new ArrayList<>();
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -77,10 +77,10 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto produto = new Produto();
-                produto.setId(rs.getInt("id"));
+                produto.setId(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
                 produto.setPreco(rs.getBigDecimal("preco"));
-                produto.setQntEstoque(rs.getInt("qntEstoque"));
+                produto.setQntEstoque(rs.getInt("qnt_estoque"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
