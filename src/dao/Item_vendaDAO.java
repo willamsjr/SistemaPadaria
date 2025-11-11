@@ -9,7 +9,7 @@ import model.Item_venda;
 public class Item_vendaDAO {
 
     public void cadastrarItens(Connection conn, int id_venda, List<Item_venda> itens) throws SQLException {
-        String sql = "INSERT INTO item_venda (id_venda, id_produto, qntd, preco_unit) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO item_venda (id_venda, id_produto, quantidade, preco_unit) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
