@@ -19,7 +19,8 @@ public class TesteDAO {
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         Funcionario func = new Funcionario();
         func.setNome("Ana Maria Silva");
-        func.setLogin("ana.vendas");
+        String loginUnico = "ana.vendas" + System.currentTimeMillis();
+        func.setLogin(loginUnico);
         func.setSenhaHash("senha123");
 
         System.out.println("\n--- 1. Testando Cadastro de Funcionário ---");
