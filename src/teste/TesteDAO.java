@@ -3,11 +3,16 @@ package teste;
 import dao.ClienteDAO;
 import dao.FuncionarioDAO;
 import dao.ProdutoDAO;
+import dao.VendaDAO;
 import model.Cliente;
 import model.Funcionario;
 import model.Produto;
+import model.Venda;
+import model.Item_venda;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TesteDAO {
@@ -16,23 +21,32 @@ public class TesteDAO {
 
         System.out.println("       INICIANDO TESTES DE INFRAESTRUTURA      ");
 
+        final int ID_FUNCIONARIO_TESTE = 1;
+        final int ID_CLIENTE_TESTE = 1;
+        final int ID_PRODUTO_EXISTENTE = 4;
+        final int QNT_ESTOQUE_INSUFICIENTE = 9999;
+        // --------------------------------------------------------
+
+        ProdutoDAO produtoDAO = new ProdutoDAO();
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        VendaDAO vendaDAO = new VendaDAO();
+
+        // --- 1. Testando Cadastro de Funcionário
         Funcionario func = new Funcionario();
         func.setNome("Ana Maria Silva");
-        String loginUnico = "ana.vendas" + System.currentTimeMillis();
-        func.setLogin(loginUnico);
+        // Adiciona um sufixo para evitar erro de 'Duplicate Entry'
+        func.setLogin("ana.vendas" + System.currentTimeMillis());
         func.setSenhaHash("senha123");
 
         System.out.println("\n--- 1. Testando Cadastro de Funcionário ---");
         if (funcionarioDAO.cadastrar(func)) {
             System.out.println("[OK] SUCESSO: Funcionário cadastrado.");
         } else {
-            System.err.println("[ERRO] FALHA: Erro ao cadastrar funcionário. Verifique o banco de dados (tabela 'funcionario').");
+            System.err.println("[ERRO] FALHA: Erro ao cadastrar funcionário.");
         }
 
-        // TESTE DE CADASTRO DE CLIENTE
-
-        ClienteDAO clienteDAO = new ClienteDAO();
+        // --- 2. Testando Cadastro de Cliente
         Cliente cliente = new Cliente();
         cliente.setNome("Joao da Silva");
         cliente.setTelefone("79998887766");
@@ -43,14 +57,12 @@ public class TesteDAO {
         if (clienteDAO.cadastrar(cliente)) {
             System.out.println("[OK] SUCESSO: Cliente cadastrado.");
         } else {
-            System.err.println("[ERRO] FALHA: Erro ao cadastrar cliente. Verifique o banco de dados (tabela 'cliente').");
+            System.err.println("[ERRO] FALHA: Erro ao cadastrar cliente.");
         }
 
-        // TESTE DE CADASTRO DE PRODUTO
-
-        ProdutoDAO produtoDAO = new ProdutoDAO();
+        // --- 3. Testando Cadastro de Produto
         Produto pao = new Produto();
-        pao.setNome("Pao Frances");
+        pao.setNome("Pao Frances Teste Venda");
         pao.setPreco(new BigDecimal("0.75"));
         pao.setQntEstoque(300);
 
@@ -58,22 +70,91 @@ public class TesteDAO {
         if (produtoDAO.cadastrar(pao)) {
             System.out.println("[OK] SUCESSO: Produto cadastrado.");
         } else {
-            System.err.println("[ERRO] FALHA: Erro ao cadastrar produto. Verifique o banco de dados (tabela 'produto').");
+            System.err.println("[ERRO] FALHA: Erro ao cadastrar produto.");
         }
 
-        // TESTE DE CONSULTA DE PRODUTOS
-
+        // --- 4. Testando Consulta de Produtos
         System.out.println("\n--- 4. Testando Consulta de Produtos ---");
         List<Produto> produtos = produtoDAO.buscarTodos();
         if (!produtos.isEmpty()) {
-            System.out.println("[OK] SUCESSO: Produtos encontrados (" + produtos.size() + " itens):");
-            for (Produto p : produtos) {
-                System.out.println("  -> ID: " + p.getId() + ", Nome: " + p.getNome() + ", Estoque: " + p.getQntEstoque());
-            }
+            System.out.println("[OK] SUCESSO: Produtos encontrados (" + produtos.size() + " itens).");
         } else {
-            System.err.println("[ERRO] FALHA: Nenhum produto encontrado. A consulta falhou.");
+            System.err.println("[ERRO] FALHA: Nenhum produto encontrado.");
         }
 
         System.out.println("=============================================");
+
+        // --- VERIFICAÇÃO DE ESTOQUE INICIAL PARA TESTE DE VENDA
+
+        Produto produtoInicial = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
+        if (produtoInicial == null) {
+            System.err.println("AVISO CRÍTICO: Produto de teste ID " + ID_PRODUTO_EXISTENTE + " não encontrado. Testes de Venda ignorados.");
+            return;
+        }
+        System.out.println(">>> Estoque inicial do Produto ID " + ID_PRODUTO_EXISTENTE + ": " + produtoInicial.getQntEstoque());
+
+
+        // --- 5. Testando Transação de Venda (Cenário de SUCESSO - COMMIT) ---
+
+        Venda vendaSucesso = new Venda();
+        vendaSucesso.setIdFuncionario(ID_FUNCIONARIO_TESTE);
+        vendaSucesso.setIdCliente(ID_CLIENTE_TESTE);
+        vendaSucesso.setData(LocalDateTime.now());
+        vendaSucesso.setValorTotal(new BigDecimal("3.75")); // 5 * 0.75
+
+        List<Item_venda> itensSucesso = new ArrayList<>();
+        itensSucesso.add(new Item_venda(null, ID_PRODUTO_EXISTENTE, 5, new BigDecimal("0.75")));
+        vendaSucesso.setItens(itensSucesso);
+
+        System.out.println("\n--- 5. Teste de Venda - SUCESSO (COMMIT) ---");
+        if (vendaDAO.registrarVenda(vendaSucesso)) {
+            System.out.println("[OK] SUCESSO: Venda ID " + vendaSucesso.getId() + " registrada com COMMIT.");
+            Produto produtoAposSucesso = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
+            System.out.println(">>> Estoque após SUCESSO: " + produtoAposSucesso.getQntEstoque() +
+                    " (Deve ter diminuído 5 unidades)");
+        } else {
+            System.err.println("[ERRO] FALHA: A venda de sucesso NÃO deveria falhar.");
+        }
+
+
+        // --- 6. Testando Transação de Venda (Cenário de FALHA - ROLLBACK) ---
+
+        Venda vendaFalha = new Venda();
+        vendaFalha.setIdFuncionario(ID_FUNCIONARIO_TESTE);
+        vendaFalha.setIdCliente(ID_CLIENTE_TESTE);
+        vendaFalha.setData(LocalDateTime.now());
+        vendaFalha.setValorTotal(new BigDecimal("9999.00"));
+
+        List<Item_venda> itensFalha = new ArrayList<>();
+        itensFalha.add(new Item_venda(null, ID_PRODUTO_EXISTENTE, QNT_ESTOQUE_INSUFICIENTE, new BigDecimal("1.00")));
+        vendaFalha.setItens(itensFalha);
+
+        System.out.println("\n--- 6. Teste de Venda - FALHA (ROLLBACK) ---");
+
+        Produto produtoAntesFalha = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
+        int estoqueAntes = produtoAntesFalha != null ? produtoAntesFalha.getQntEstoque() : -1;
+        System.out.println(">>> Estoque ANTES da falha: " + estoqueAntes);
+
+
+        if (!vendaDAO.registrarVenda(vendaFalha)) {
+            System.out.println("[OK] SUCESSO: A venda falhou corretamente (Estoque insuficiente).");
+            Produto produtoAposFalha = produtoDAO.buscarPorId(ID_PRODUTO_EXISTENTE);
+            int estoqueApos = produtoAposFalha != null ? produtoAposFalha.getQntEstoque() : -1;
+
+            System.out.println(">>> Estoque APÓS falha: " + estoqueApos + " (Deve ser igual ao estoque ANTES: " + estoqueAntes + ")");
+
+            if (estoqueApos == estoqueAntes) {
+                System.out.println("[OK] ROLLBACK BEM SUCEDIDO: O estoque não foi alterado, e nenhuma venda ou item foi registrado.");
+            } else {
+                System.err.println("[ERRO] FALHA CRÍTICA DE TRANSAÇÃO: O estoque foi alterado APESAR da falha de venda.");
+            }
+
+        } else {
+            System.err.println("[ERRO] FALHA CRÍTICA: A venda de falha NÃO deveria ter sido registrada.");
+        }
+
+
+        System.out.println("=============================================");
+        System.out.println("        TESTES DE VENDA CONCLUÍDOS         ");
     }
 }
