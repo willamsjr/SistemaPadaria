@@ -4,7 +4,7 @@ import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,9 +17,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Delícias Do Trigo - Sistema");
+        this.primaryStage.setTitle("Sistema de Padaria - Login");
 
-        // Inicia com a tela de login
         showLoginScreen();
     }
 
@@ -27,47 +26,47 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/Login.fxml"));
+
             StackPane loginLayout = loader.load();
 
-            // Ajuste de tamanho da cena para o layout do Login (com fundo)
-            Scene scene = new Scene(loginLayout, 600, 500);
-
+            Scene scene = new Scene(loginLayout);
             primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
+            primaryStage.show();
 
-            // Dá ao controller acesso ao MainApp
             LoginController controller = loader.getController();
             controller.setMainApp(this);
 
-            primaryStage.show();
-
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Erro ao carregar a tela de Login.");
+            e.printStackTrace();
         }
     }
 
     public void showDashboardScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/Dashboard.fxml"));
-            BorderPane dashboardLayout = loader.load();
+            loader.setLocation(MainApp.class.getResource("/view/MenuPrincipal.fxml"));
 
-            // Cria uma nova cena com o layout da Dashboard
-            Scene scene = new Scene(dashboardLayout);
+            AnchorPane dashboardLayout = loader.load();
 
-            // Troca a cena no Stage (janela) principal
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(true);
-            primaryStage.centerOnScreen();
+            Stage dashboardStage = new Stage();
+            dashboardStage.setTitle("Sistema de Padaria - Dashboard");
+            dashboardStage.setScene(new Scene(dashboardLayout));
+            dashboardStage.show();
 
+            if (primaryStage != null) {
+                primaryStage.close();
+            }
 
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Erro ao carregar a tela da Dashboard.");
+            e.printStackTrace();
         }
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public static void main(String[] args) {
         launch(args);

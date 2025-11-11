@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="620.0" prefWidth="1010.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RelatoriosController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label layoutX="30.0" layoutY="30.0" text="Relatório de Vendas">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <HBox alignment="BOTTOM_LEFT" layoutX="30.0" layoutY="80.0" spacing="20.0">
+            <children>
+                <VBox>
+                    <Label text="Data Início" />
+                    <DatePicker fx:id="datePickerInicio" />
+                </VBox>
+                <VBox>
+                    <Label text="Data Fim" />
+                    <DatePicker fx:id="datePickerFim" />
+                </VBox>
+                <Button fx:id="btnBuscar" mnemonicParsing="false" text="Buscar" />
+                <Button fx:id="btnLimpar" mnemonicParsing="false" style="-fx-background-color: #f39c12;" text="Ver Todas" textFill="WHITE" />
+            </children>
+        </HBox>
+
+        <TableView fx:id="tblVendas" layoutX="30.0" layoutY="140.0" prefHeight="400.0" prefWidth="950.0">
+            <columns>
+                <TableColumn fx:id="colIdVenda" prefWidth="75.0" text="ID Venda" />
+                <TableColumn fx:id="colData" prefWidth="200.0" text="Data e Hora" />
+                <TableColumn fx:id="colCliente" prefWidth="250.0" text="Cliente" />
+                <TableColumn fx:id="colFuncionario" prefWidth="250.0" text="Funcionário" />
+                <TableColumn fx:id="colValorTotal" prefWidth="175.0" text="Valor Total (R$)" />
+            </columns>
+        </TableView>
+
+        <VBox alignment="CENTER_RIGHT" layoutX="580.0" layoutY="550.0" prefWidth="400.0" spacing="5.0">
+            <children>
+                <Label fx:id="lblTotalVendasPeriodo" text="Total de Vendas no Período: 0">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblValorTotalPeriodo" text="Valor Total no Período: R$ 0,00">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+
+    </children>
+</AnchorPane>

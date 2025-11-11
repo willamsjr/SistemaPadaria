@@ -15,9 +15,10 @@ public class Item_vendaDAO {
 
             for (Item_venda item : itens) {
                 stmt.setInt(1, id_venda);
-                stmt.setInt(2, item.getIdProduto());
+                stmt.setInt(2, item.getIdProduto()); // Chama getIdProduto() (do novo model)
                 stmt.setInt(3, item.getQuantidade());
-                stmt.setBigDecimal(4, item.getPrecoUnit());
+
+                stmt.setBigDecimal(4, item.getPrecoUnitario());
 
                 stmt.addBatch();
             }

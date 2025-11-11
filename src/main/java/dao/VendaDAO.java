@@ -120,18 +120,24 @@ public class VendaDAO {
         }
     }
 
+    private final String SQL_RELATORIO_BASE =
+            "SELECT v.id_venda, v.data, v.valor_total, v.id_cliente, v.id_funcionario, " +
+                    "f.nome AS nome_funcionario, " +
+                    "c.nome AS nome_cliente " +
+                    "FROM venda v " +
+                    "JOIN funcionario f ON v.id_funcionario = f.id_funcionario " +
+                    "LEFT JOIN cliente c ON v.id_cliente = c.id_cliente ";
+
     public List<Venda> buscarTodasVendas() {
-        String sql = "SELECT id_venda, id_cliente, id_funcionario, data, valor_total FROM venda ORDER BY data DESC";
+        String sql = SQL_RELATORIO_BASE + "ORDER BY v.data DESC";
         return buscarVendasPorQuery(sql);
     }
 
     public List<Venda> buscarVendasPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
-        String sql = "SELECT id_venda, id_cliente, id_funcionario, data, valor_total FROM venda WHERE data BETWEEN ? AND ? ORDER BY data DESC";
+        String sql = SQL_RELATORIO_BASE + "WHERE v.data BETWEEN ? AND ? ORDER BY v.data DESC";
         return buscarVendasPorQuery(sql, inicio, fim);
     }
 
-
-    // Método Auxiliar para mapear o ResultSet
     private List<Venda> buscarVendasPorQuery(String sql, Object... params) {
         List<Venda> vendas = new ArrayList<>();
 
@@ -156,13 +162,37 @@ public class VendaDAO {
                     venda.setIdFuncionario(rs.getInt("id_funcionario"));
                     venda.setData(rs.getTimestamp("data").toLocalDateTime());
                     venda.setValorTotal(rs.getBigDecimal("valor_total"));
+                    venda.setNomeFuncionario(rs.getString("nome_funcionario"));
+                    venda.setNomeCliente(rs.getString("nome_cliente"));
                     vendas.add(venda);
                 }
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar vendas: " + e.getMessage());
+            System.err.println("Erro ao buscar vendas (relatório): " + e.getMessage());
         }
         return vendas;
+    }
+
+    public double calcularTotalVendasHoje() {
+        String sql = "SELECT SUM(valor_total) AS total FROM venda WHERE DATE(data) = CURDATE()";
+        double total = 0.0;
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                java.math.BigDecimal totalBigDecimal = rs.getBigDecimal(1);
+
+                if (totalBigDecimal != null) {
+                    total = totalBigDecimal.doubleValue();
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao calcular total de vendas de hoje: " + e.getMessage());
+        }
+        return total;
     }
 }

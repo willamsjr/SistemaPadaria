@@ -1,90 +1,78 @@
 package dao;
 
 import conexao.ConexaoDB;
-import model.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Produto;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
+import java.math.BigDecimal; // IMPORTANTE: Deve existir
 
 public class ProdutoDAO {
 
-    public Produto buscarPorId(int id) {
-        String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto WHERE id_produto = ?";
-        Produto produto = null;
+    private Connection connection;
 
-        try (Connection conn = ConexaoDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public ProdutoDAO() {
+        this.connection = ConexaoDB.getConnection();
+    }
 
-            stmt.setInt(1, id);
+    public int contarEstoqueBaixo() {
+        String sql = "SELECT COUNT(*) FROM produto WHERE qnt_estoque <= ?";
+        int contagem = 0;
+
+        int nivelEstoqueBaixo = 5;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, nivelEstoqueBaixo);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    produto = new Produto();
-                    produto.setId(rs.getInt("id_produto"));
-                    produto.setNome(rs.getString("nome"));
-                    produto.setPreco(rs.getBigDecimal("preco"));
-                    produto.setQntEstoque(rs.getInt("qnt_estoque"));
+                    contagem = rs.getInt(1);
                 }
             }
-
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
+            System.err.println("Erro ao contar estoque baixo: " + e.getMessage());
         }
-        return produto;
+        return contagem;
     }
 
-    public boolean decrementarEstoque(int id_produto, int quantidade) {
-        String sql = "UPDATE produto SET qnt_estoque = qnt_estoque - ? WHERE id_produto = ? AND qnt_estoque >= ?";
-        try (Connection conn = ConexaoDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, quantidade);
-            stmt.setInt(2, id_produto);
-            stmt.setInt(3, quantidade);
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
-        } catch (SQLException e) {
-            System.err.println("Erro ao decrementar estoque do produto ID " + id_produto + ": " + e.getMessage());
-            return false;
-        }
-    }
-
-    public boolean cadastrar(Produto produto) {
-        String sql = "INSERT INTO produto (nome, preco, qnt_estoque) VALUES (?, ?, ?)";
-        try (Connection conn = ConexaoDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public void adicionar(Produto produto) {
+        String sql = "INSERT INTO produto(nome, preco, qnt_estoque) VALUES(?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());
-            stmt.setBigDecimal(2, produto.getPreco());
+            stmt.setDouble(2, produto.getPreco());
             stmt.setInt(3, produto.getQntEstoque());
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
+            stmt.execute();
         } catch (SQLException e) {
-            System.err.println("Erro ao cadastrar produto: " + e.getMessage());
-            return false;
+            throw new RuntimeException("Erro ao adicionar produto: " + e.getMessage());
         }
     }
 
-    public List<Produto> buscarTodos() {
-        String sql = "SELECT id_produto, nome, preco, qnt_estoque FROM produto";
+    public List<Produto> listarTodos() {
+        String sql = "SELECT * FROM produto";
         List<Produto> produtos = new ArrayList<>();
-        try (Connection conn = ConexaoDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Produto produto = new Produto();
-                produto.setId(rs.getInt("id_produto"));
+                produto.setIdProduto(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
-                produto.setPreco(rs.getBigDecimal("preco"));
+
+                // LINHA 46 ou 47: CORREÇÃO OBRIGATÓRIA
+                // Lendo como BigDecimal e convertendo para double para evitar o erro.
+                produto.setPreco(rs.getBigDecimal("preco").doubleValue());
+
                 produto.setQntEstoque(rs.getInt("qnt_estoque"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar todos os produtos: " + e.getMessage());
+            throw new RuntimeException("Erro ao listar produtos: " + e.getMessage());
         }
         return produtos;
     }
+
 }

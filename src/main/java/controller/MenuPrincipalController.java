@@ -5,30 +5,31 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+
 import java.io.IOException;
 
-public class DashboardController {
+public class MenuPrincipalController {
 
-    @FXML
-    private Button btnDashboard;
-    @FXML
-    private Button btnCadastroVendas;
-    @FXML
-    private Button btnEstoque;
-    @FXML
-    private Button btnRelatorios;
-    @FXML
-    private Button btnAgendamento;
-    @FXML
-    private Button btnSair;
+    @FXML private Button btnDashboard;
+    @FXML private Button btnCadastroVendas;
+    @FXML private Button btnEstoque;
+    @FXML private Button btnRelatorios;
+    @FXML private Button btnAgendamento;
+    @FXML private Button btnSair;
 
-    @FXML
-    private AnchorPane mainContentPane;
+    @FXML private AnchorPane mainContentPane;
 
     @FXML
     public void initialize() {
         btnSair.setOnAction(e -> handleSair());
+
+        btnDashboard.setOnAction(e -> loadView("/view/Dashboard.fxml"));
         btnCadastroVendas.setOnAction(e -> loadView("/view/CadastroVendas.fxml"));
+        btnEstoque.setOnAction(e -> loadView("/view/Estoque.fxml"));
+        btnRelatorios.setOnAction(e -> loadView("/view/Relatorios.fxml"));
+        btnAgendamento.setOnAction(e -> loadView("/view/Agendamento.fxml"));
+
+        loadView("/view/Dashboard.fxml");
     }
 
     private void handleSair() {
