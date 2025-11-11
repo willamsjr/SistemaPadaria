@@ -24,10 +24,10 @@ public class ProdutoDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     produto = new Produto();
-                    produto.setId(rs.getInt("id"));
+                    produto.setId(rs.getInt("id_produto"));
                     produto.setNome(rs.getString("nome"));
                     produto.setPreco(rs.getBigDecimal("preco"));
-                    produto.setQntEstoque(rs.getInt("qntEstoque"));
+                    produto.setQntEstoque(rs.getInt("qnt_estoque"));
                 }
             }
 
@@ -51,7 +51,6 @@ public class ProdutoDAO {
             return false;
         }
     }
-
 
     public boolean cadastrar(Produto produto) {
         String sql = "INSERT INTO produto (nome, preco, qnt_estoque) VALUES (?, ?, ?)";

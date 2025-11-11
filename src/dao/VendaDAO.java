@@ -68,7 +68,7 @@ public class VendaDAO {
     }
 
     private int inserirVendaPrincipal(Connection conn, Venda venda) throws SQLException {
-        String sql = "INSERT INTO venda (data, valor_total, idFuncionario, idCliente) VALUES (NOW(), ?, ?, ?)";
+        String sql = "INSERT INTO venda (data, valor_total, id_func, id_cliente) VALUES (NOW(), ?, ?, ?)";
         int id_venda_gerada = -1;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
