@@ -58,7 +58,7 @@ public class EstoqueController {
 
                 if (produto == null || empty) {
                     // Linha vazia
-                } else if (produto.getQntEstoque() <= LIMITE_ESTOQUE_BAIXO) {
+                } else if (produto.getQntEstoque() != null && produto.getQntEstoque() <= LIMITE_ESTOQUE_BAIXO) {
                     getStyleClass().add(ESTILO_ESTOQUE_BAIXO);
                 }
             }
@@ -67,14 +67,17 @@ public class EstoqueController {
 
     private void carregarProdutosNaTabela() {
         listaProdutos.clear();
-        List<Produto> produtosDoBanco = produtoDAO.buscarTodos();
-        listaProdutos.addAll(produtosDoBanco);
+
+        List<Produto> lista = produtoDAO.listarTodos();
+
+        // CORREÇÃO FINAL: Usando a variável 'lista'
+        listaProdutos.addAll(lista);
     }
 
     private void handleCadastrarProduto() {
         String nome = txtNovoNome.getText();
         BigDecimal preco;
-        int qntEstoque;
+        Integer qntEstoque;
 
         if (nome.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Campo Vazio", "O nome do produto é obrigatório.");
@@ -99,7 +102,9 @@ public class EstoqueController {
         novoProduto.setPreco(preco);
         novoProduto.setQntEstoque(qntEstoque);
 
-        boolean sucesso = produtoDAO.cadastrar(novoProduto);
+        // CORREÇÃO FINAL: Chamando 'adicionar' (que agora retorna boolean)
+        // Se você renomeou o método no DAO, use o nome correto aqui (ex: 'cadastrar')
+        boolean sucesso = produtoDAO.adicionar(novoProduto);
 
         if (sucesso) {
             showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Produto cadastrado com sucesso!");

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import model.Produto;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal; // IMPORTANTE: Deve existir
+import java.math.BigDecimal;
 
 public class ProdutoDAO {
 
@@ -39,16 +39,42 @@ public class ProdutoDAO {
         return contagem;
     }
 
-    public void adicionar(Produto produto) {
+    public boolean adicionar(Produto produto) {
+        // Se no seu Controller você chama 'cadastrar', mude o nome deste método para 'cadastrar'
         String sql = "INSERT INTO produto(nome, preco, qnt_estoque) VALUES(?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());
-            stmt.setDouble(2, produto.getPreco());
+            stmt.setBigDecimal(2, produto.getPreco());
             stmt.setInt(3, produto.getQntEstoque());
-            stmt.execute();
+
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao adicionar produto: " + e.getMessage());
+            System.err.println("Erro ao adicionar produto: " + e.getMessage());
+            return false;
         }
+    }
+
+    public Produto buscarPorId(int id) {
+        String sql = "SELECT * FROM produto WHERE id_produto = ?";
+        Produto produto = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    produto = new Produto();
+                    produto.setId(rs.getInt("id_produto"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setPreco(rs.getBigDecimal("preco"));
+                    produto.setQntEstoque(rs.getInt("qnt_estoque"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
+        }
+        return produto;
     }
 
     public List<Produto> listarTodos() {
@@ -59,13 +85,9 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto produto = new Produto();
-                produto.setIdProduto(rs.getInt("id_produto"));
+                produto.setId(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
-
-                // LINHA 46 ou 47: CORREÇÃO OBRIGATÓRIA
-                // Lendo como BigDecimal e convertendo para double para evitar o erro.
-                produto.setPreco(rs.getBigDecimal("preco").doubleValue());
-
+                produto.setPreco(rs.getBigDecimal("preco"));
                 produto.setQntEstoque(rs.getInt("qnt_estoque"));
                 produtos.add(produto);
             }
@@ -74,5 +96,4 @@ public class ProdutoDAO {
         }
         return produtos;
     }
-
 }

@@ -1,10 +1,8 @@
-/* Estilo para a linha da tabela com estoque baixo */
 .low-stock-row {
-    -fx-background-color: #FFEBEE; /* Vermelho bem claro */
-    -fx-text-fill: #B71C1C; /* Texto vermelho escuro */
+    -fx-background-color: #FFEBEE;
+    -fx-text-fill: #B71C1C;
 }
 
-/* Garante que o estilo permaneça visível mesmo se a linha for selecionada */
 .low-stock-row:selected {
-    -fx-background-color: #FFCDD2; /* Vermelho um pouco mais escuro */
+    -fx-background-color: #FFCDD2;
 }

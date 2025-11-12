@@ -16,8 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import model.Cliente;
 import model.Item_venda;
-import model.Produto;
 import model.Venda;
+import model.Produto;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;

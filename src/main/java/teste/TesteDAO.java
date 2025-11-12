@@ -71,7 +71,7 @@ public class TesteDAO {
         pao.setQntEstoque(300);
 
         System.out.println("\n--- 3. Testando Cadastro de Produto (RF03) ---");
-        if (produtoDAO.cadastrar(pao)) {
+        if (produtoDAO.adicionar(pao)) {
             System.out.println("[OK] SUCESSO: Produto cadastrado.");
         } else {
             System.err.println("[ERRO] FALHA: Erro ao cadastrar produto.");
@@ -79,7 +79,7 @@ public class TesteDAO {
 
         // --- 4. Testando Consulta de Produtos ---
         System.out.println("\n--- 4. Testando Consulta de Produtos ---");
-        List<Produto> produtos = produtoDAO.buscarTodos();
+        List<Produto> produtos = produtoDAO.listarTodos();
         if (!produtos.isEmpty()) {
             System.out.println("[OK] SUCESSO: Produtos encontrados (" + produtos.size() + " itens).");
         } else {

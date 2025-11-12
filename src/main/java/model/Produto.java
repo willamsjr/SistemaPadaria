@@ -3,29 +3,52 @@ package model;
 import java.math.BigDecimal;
 
 public class Produto {
+
     private Integer id;
     private String nome;
     private BigDecimal preco;
-    private int qntEstoque;
+    private Integer qntEstoque;
 
-    public Produto() {}
+    public Produto() {
+    }
 
-    public Produto(Integer id, String nome, BigDecimal preco, int qntEstoque) {
+    public Produto(Integer id, String nome, BigDecimal preco, Integer qntEstoque) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.qntEstoque = qntEstoque;
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public Integer getId() {
+        return id;
+    }
 
-    public BigDecimal getPreco() { return preco; }
-    public void setPreco(BigDecimal preco) { this.preco = preco; }
+    public String getNome() {
+        return nome;
+    }
 
-    public int getQntEstoque() { return qntEstoque; }
-    public void setQntEstoque(int qntEstoque) { this.qntEstoque = qntEstoque; }
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public Integer getQntEstoque() {
+        return qntEstoque;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public void setQntEstoque(Integer qntEstoque) {
+        this.qntEstoque = qntEstoque;
+    }
 }
