@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.DetalhesVendaController"
+            prefWidth="520" prefHeight="380" style="-fx-background-color: #ffffff;">
+
+    <children>
+        <VBox AnchorPane.topAnchor="8" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.bottomAnchor="8" spacing="8">
+            <Label text="Detalhes da Venda">
+                <font>
+                    <Font size="18" />
+                </font>
+            </Label>
+
+            <TableView fx:id="tblItens" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colProduto" text="Produto" prefWidth="220"/>
+                    <TableColumn fx:id="colQtd" text="Qtd." prefWidth="60"/>
+                    <TableColumn fx:id="colPrecoUnit" text="Preço Unit." prefWidth="100"/>
+                    <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label text="Total:" />
+                <Label fx:id="lblTotal" text="R$ 0,00" style="-fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox spacing="8" alignment="CENTER_RIGHT">
+                <Button text="Fechar" fx:id="btnFechar" prefWidth="100"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

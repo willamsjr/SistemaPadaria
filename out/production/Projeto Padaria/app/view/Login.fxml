@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.LoginController"
+           style="-fx-background-color: #EEEEEE;">
+
+    <children>
+
+        <VBox alignment="CENTER" spacing="40">
+            <padding>
+                <Insets top="40" bottom="40" left="40" right="40"/>
+            </padding>
+
+            <VBox alignment="CENTER"
+                  maxWidth="450"
+                  spacing="15" style="-fx-background-color: #EEEEEE;
+                         -fx-background-radius: 20;
+                         -fx-padding: 40;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 20, 0.15, 0, 4);">
+
+                <ImageView fitWidth="480" preserveRatio="true">
+                    <image>
+                        <Image url="@/img/logo.png"/>
+                    </image>
+                </ImageView>
+
+                <VBox spacing="6">
+                    <Label text="Login" style="-fx-font-size: 15; -fx-text-fill: #333;" />
+                    <TextField fx:id="txtUsuario"
+                               promptText="Digite seu login"
+                               prefWidth="300"
+                               style="-fx-background-radius: 12;
+                                      -fx-border-radius: 12;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14;" />
+                </VBox>
+
+                <VBox spacing="6">
+                    <Label text="Senha" style="-fx-font-size: 15; -fx-text-fill: #333;" />
+                    <PasswordField fx:id="txtSenha"
+                                   promptText="Digite sua senha"
+                                   prefWidth="300"
+                                   style="-fx-background-radius: 12;
+                                          -fx-border-radius: 12;
+                                          -fx-padding: 10;
+                                          -fx-font-size: 14;" />
+                </VBox>
+
+                <Label fx:id="lblMensagemErro"
+                       textFill="red"
+                       style="-fx-font-size: 14;"/>
+
+                <Button fx:id="btnLogin"
+                        text="Entrar"
+                        onAction="#handleLogin"
+                        prefHeight="42"
+                        prefWidth="220"
+                        style="-fx-background-color: #ffd000;
+                               -fx-text-fill: #6e0d0d;
+                               -fx-font-size: 16;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 15;" />
+            </VBox>
+
+        </VBox>
+
+    </children>
+
+</StackPane>

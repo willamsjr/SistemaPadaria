@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.AgendamentoController"
+            prefWidth="1010.0" prefHeight="620.0"
+            style="-fx-background-color: #EEEEEE;">
+
+    <!-- TOPO -->
+    <top>
+        <VBox spacing="10" BorderPane.alignment="CENTER">
+            <padding><Insets top="20" left="20" /></padding>
+        </VBox>
+    </top>
+
+    <!-- CENTRO (tabela + botões) -->
+    <center>
+        <VBox spacing="15" BorderPane.alignment="CENTER">
+            <padding><Insets left="20" right="20"/></padding>
+
+            <Label text="Agendamentos">
+                <font><Font name="System Bold" size="24"/></font>
+            </Label>
+
+            <!-- TABELA RESPONSIVA -->
+            <TableView fx:id="tblAgendamentos" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colData" text="Data/Hora" prefWidth="130"/>
+                    <TableColumn fx:id="colCliente" text="Cliente" prefWidth="120"/>
+                    <TableColumn fx:id="colTelefone" text="Telefone" prefWidth="120"/>
+                    <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="200"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button fx:id="btnConcluirPedido" prefWidth="220" text="Concluir Pedido Selecionado"/>
+                <Button fx:id="btnDeletarPedido" prefWidth="220"
+                        text="Apagar Pedido (Concluído)"
+                        style="-fx-background-color: #e74c3c;" textFill="WHITE"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- LADO DIREITO (FORMULÁRIO) -->
+    <right>
+        <VBox spacing="10" prefWidth="320" BorderPane.alignment="CENTER">
+            <padding><Insets top="20" right="20"/></padding>
+
+            <Label text="Novo Agendamento">
+                <font><Font name="System Bold" size="16"/></font>
+            </Label>
+
+            <Label text="Data do Pedido"/>
+            <DatePicker fx:id="datePickerData" prefWidth="280"/>
+
+            <Label text="Hora (HH:mm)"/>
+            <TextField fx:id="txtHora" promptText="Ex: 14:30"/>
+
+            <Label text="Nome do Cliente"/>
+            <TextField fx:id="txtClienteNome" promptText="Nome do cliente"/>
+
+            <Label text="Telefone"/>
+            <TextField fx:id="txtClienteTelefone" promptText="(75) 99999-8888"/>
+
+            <Label text="Descrição do Pedido"/>
+            <TextArea fx:id="txtDescricao" prefHeight="150" wrapText="true"
+                      promptText="Ex: 1 Bolo de chocolate, 20 pães"/>
+
+            <Button fx:id="btnAgendar" prefWidth="280"
+                    style="-fx-background-color: #27ae60;"
+                    textFill="WHITE" text="AGENDAR">
+                <font><Font name="System Bold" size="14"/></font>
+                <VBox.margin><Insets top="20"/></VBox.margin>
+            </Button>
+
+        </VBox>
+    </right>
+
+</BorderPane>

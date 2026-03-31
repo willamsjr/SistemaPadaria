@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="400" prefHeight="350"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.FuncionariosPopupController">
+
+    <children>
+        <VBox spacing="15" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20">
+
+            <Label text="Cadastrar Funcionário" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+            <VBox spacing="5">
+                <Label text="Nome:"/>
+                <TextField fx:id="txtNome"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="CPF:"/>
+                <TextField fx:id="txtCpf"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Login:"/>
+                <TextField fx:id="txtLogin"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Senha:"/>
+                <TextField fx:id="txtSenha"/>
+            </VBox>
+
+            <Button fx:id="btnSalvar" text="Salvar" prefHeight="35"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+
+        </VBox>
+    </children>
+
+</AnchorPane>

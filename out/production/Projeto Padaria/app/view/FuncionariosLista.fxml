@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.FuncionariosListaController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <children>
+
+        <VBox spacing="20"
+              AnchorPane.topAnchor="0"
+              AnchorPane.bottomAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0">
+
+            <!-- TÍTULO -->
+            <Label text="Funcionários Cadastrados">
+                <font><Font name="System Bold" size="22"/></font>
+            </Label>
+
+            <!-- TABELA -->
+            <TableView fx:id="tblFuncionarios" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colId" prefWidth="80" text="ID"/>
+                    <TableColumn fx:id="colNome" prefWidth="200" text="Nome"/>
+                    <TableColumn fx:id="colCpf" prefWidth="150" text="CPF"/>
+                    <TableColumn fx:id="colLogin" prefWidth="150" text="Login"/>
+                </columns>
+            </TableView>
+
+            <!-- BOTÕES -->
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+
+                <Button fx:id="btnAtualizar" text="Atualizar Lista"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;"
+                        prefWidth="150"/>
+
+                <Button fx:id="btnFechar" text="Fechar"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"
+                        prefWidth="100"/>
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

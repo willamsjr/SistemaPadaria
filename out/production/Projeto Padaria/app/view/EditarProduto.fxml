@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.EditarProdutoController"
+            prefWidth="420" prefHeight="350"
+            stylesheets="@/app/css/styles.css">
+
+    <children>
+
+        <VBox spacing="15" AnchorPane.topAnchor="15" AnchorPane.leftAnchor="15" AnchorPane.rightAnchor="15">
+
+            <Label text="Editar Produto" styleClass="title-text" style="-fx-text-fill: black;"/>
+
+            <Label text="Nome"/>
+            <TextField fx:id="txtNome"/>
+
+            <Label text="Preço (R$)"/>
+            <TextField fx:id="txtPreco"/>
+
+            <Label text="Quantidade"/>
+            <TextField fx:id="txtQuantidade"/>
+
+            <Label text="Qtd. Mínima"/>
+            <TextField fx:id="txtMinimo"/>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Cancelar" styleClass="button-yellow" onAction="#cancelar"/>
+                <Button text="Salvar Alterações" styleClass="button-green" onAction="#salvar"/>
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

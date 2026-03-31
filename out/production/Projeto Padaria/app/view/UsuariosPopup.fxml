@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.UsuariosPopupController"
+            prefWidth="750" prefHeight="520">
+
+    <children>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <VBox spacing="12" AnchorPane.topAnchor="12" AnchorPane.leftAnchor="12"
+              AnchorPane.rightAnchor="12" AnchorPane.bottomAnchor="12">
+
+            <Label text="Gerenciar Usuários"
+                   style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+            <TableView fx:id="tblUsuarios" prefHeight="340">
+                <columns>
+                    <TableColumn text="ID" prefWidth="60" fx:id="colId" />
+                    <TableColumn text="Nome" prefWidth="230" fx:id="colNome" />
+                    <TableColumn text="Login" prefWidth="160" fx:id="colLogin" />
+                    <TableColumn text="Cargo" prefWidth="120" fx:id="colCargo" />
+                    <TableColumn text="Ações" prefWidth="160" fx:id="colAcoes" />
+                </columns>
+            </TableView>
+
+            <HBox spacing="8">
+                <Button text="Adicionar Novo Usuário" fx:id="btnNovo"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;"
+                        prefHeight="35"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblInfo" text="" style="-fx-text-fill: #666;"/>
+            </HBox>
+
+        </VBox>
+
+        <!-- POPUP DE EDIÇÃO (INICIALMENTE INVISÍVEL) -->
+        <VBox fx:id="popupEdicao"
+              spacing="10"
+              style="-fx-background-color: #FFFFFF; -fx-border-color: #d0d0d0; -fx-border-width: 1; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8,0,0,2);"
+              prefWidth="420" prefHeight="320"
+              visible="false"
+              layoutX="170" layoutY="90">
+
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label text="Editar Usuário" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="8" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="30"/>
+                    <ColumnConstraints percentWidth="70"/>
+                </columnConstraints>
+
+                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Login:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtLogin" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Senha:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="txtSenha" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Cargo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboCargo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Salvar" fx:id="btnSalvar"
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+                <Button text="Cancelar" fx:id="btnCancelar"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

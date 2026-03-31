@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.EstoqueController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #EEEEEE;"
+            stylesheets="@/app/css/styles.css">
+
+    <children>
+        <VBox spacing="15" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+              AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <Label text="Estoque">
+                <font>
+                    <Font name="System Bold" size="24" />
+                </font>
+            </Label>
+
+            <HBox spacing="35" VBox.vgrow="ALWAYS">
+                <children>
+
+                    <VBox spacing="15" HBox.hgrow="ALWAYS">
+
+                        <TableView fx:id="tableEstoque" VBox.vgrow="ALWAYS"
+                                   style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                            <columns>
+                                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                                <TableColumn fx:id="colNome" text="PRODUTO" prefWidth="280"/>
+                                <TableColumn fx:id="colPreco" text="PREÇO (R$)" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
+                                <TableColumn fx:id="colQtd" text="QUANTIDADE" prefWidth="100" style="-fx-alignment: CENTER;"/>
+                                <TableColumn fx:id="colMin" text="QUANTIDADE MIN." prefWidth="100" style="-fx-alignment: CENTER;"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+
+                        <HBox spacing="15" alignment="CENTER">
+                            <children>
+                                <Button fx:id="btnEditarProduto" text="EDITAR PRODUTO"
+                                        prefHeight="40" prefWidth="180"
+                                        style="-fx-background-color: #ffd000; -fx-font-weight: bold; -fx-cursor: hand;"/>
+
+                                <Button fx:id="btnExcluirProduto" text="EXCLUIR PRODUTO"
+                                        prefHeight="40" prefWidth="180"
+                                        style="-fx-background-color: #ffd000; -fx-font-weight: bold; -fx-cursor: hand;"/>
+
+                                <Button fx:id="btnAtualizar" text="ATUALIZAR"
+                                        prefHeight="40" prefWidth="180"
+                                        style="-fx-background-color: #ffd000; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                            </children>
+                        </HBox>
+
+                    </VBox>
+
+                    <VBox spacing="12" prefWidth="300"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+
+                        <Label text="Cadastrar Produto">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Label>
+
+                        <Region prefHeight="10" />
+
+                        <Label text="Nome do Produto" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtNome" promptText="Ex: Pão Francês" prefHeight="35"/>
+
+                        <Label text="Preço (R$)" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtPreco" promptText="Ex: 0.75" prefHeight="35"/>
+
+                        <Label text="Quantidade" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtQuantidade" promptText="Ex: 300" prefHeight="35"/>
+
+                        <Label text="Quantidade Mínima" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtMinima" promptText="Ex: 10" prefHeight="35"/>
+
+                        <Region VBox.vgrow="ALWAYS" />
+
+                        <Button fx:id="btnCadastrarProduto"
+                                text="CADASTRAR PRODUTO"
+                                prefHeight="45" maxWidth="Infinity"
+                                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                    </VBox>
+
+                </children>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

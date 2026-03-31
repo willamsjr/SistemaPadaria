@@ -1,0 +1,37 @@
+/* menu.css - estilo dos botões laterais */
+
+.menu-button {
+    -fx-background-color: #FFD500;        /* Amarelo */
+    -fx-text-fill: #000000;               /* Texto preto */
+    -fx-background-radius: 25px;          /* Arredondado */
+    -fx-pref-width: 150px;
+    -fx-pref-height: 36px;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 6, 0.2, 0, 3);
+    -fx-padding: 0 10 0 10;
+}
+
+.menu-button:hover {
+    -fx-background-color: #FFEA52;
+}
+
+.menu-button:pressed {
+    -fx-background-color: #E6C300;
+}
+
+/* Botão de sair com tom diferente (opcional) */
+.menu-exit-button {
+    -fx-background-color: #FF8A65;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 20px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 36px;
+    -fx-font-weight: 700;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 6, 0.2, 0, 3);
+}
+
+.menu-exit-button:hover {
+    -fx-background-color: #ff7043;
+}

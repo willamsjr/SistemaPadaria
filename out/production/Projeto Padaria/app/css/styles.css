@@ -1,0 +1,170 @@
+/* =========================================================
+   SISTEMA PADARIA – ESTILO GLOBAL
+   Tema: Vermelho / Amarelo / Verde / Branco
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. LINHAS DE ESTOQUE BAIXO
+   --------------------------------------------------------- */
+.low-stock-row {
+    -fx-background-color: #FFEBEE;
+    -fx-text-fill: #B71C1C;
+}
+
+.low-stock-row:selected {
+    -fx-background-color: #FFCDD2;
+    -fx-text-fill: #B71C1C;
+}
+
+/* ---------------------------------------------------------
+   2. BOTÕES AMARELOS (PADRÃO)
+   --------------------------------------------------------- */
+.button-yellow {
+    -fx-background-color: #f1c40f;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 16;
+    -fx-cursor: hand;
+}
+
+.button-yellow:hover {
+    -fx-background-color: #f39c12;
+}
+
+/* ---------------------------------------------------------
+   3. BOTÃO VERDE (SALVAR / CADASTRAR)
+   --------------------------------------------------------- */
+.button-green {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 16;
+    -fx-cursor: hand;
+}
+
+.button-green:hover {
+    -fx-background-color: #1e8449;
+}
+
+/* ---------------------------------------------------------
+   4. BOTÕES ADICIONAIS
+   --------------------------------------------------------- */
+.button-red {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 16;
+}
+
+.button-red:hover {
+    -fx-background-color: #962d22;
+}
+
+.button-blue {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 16;
+}
+
+.button-blue:hover {
+    -fx-background-color: #1f6690;
+}
+
+/* ---------------------------------------------------------
+   5. CABEÇALHOS (HEADER)
+   --------------------------------------------------------- */
+.background-red {
+    -fx-background-color: #b71c1c;
+}
+
+.header-bar {
+    -fx-background-color: #b71c1c;
+    -fx-padding: 15;
+}
+
+.header-title {
+    -fx-font-size: 26px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ---------------------------------------------------------
+   6. TÍTULOS INTERNOS
+   --------------------------------------------------------- */
+.title-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* ---------------------------------------------------------
+   7. MENU LATERAL
+   --------------------------------------------------------- */
+.sidebar {
+    -fx-background-color: #8e0000;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 12 20;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #b71c1c;
+}
+
+/* ---------------------------------------------------------
+   8. CARDS
+   --------------------------------------------------------- */
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 2);
+}
+
+/* ---------------------------------------------------------
+   9. TABLEVIEW PROFISSIONAL
+   --------------------------------------------------------- */
+.table-view {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #e0e0e0;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #d9d9d9;
+}
+
+/* ---------------------------------------------------------
+   10. CAMPOS DE TEXTO
+   --------------------------------------------------------- */
+.text-field, .text-area {
+    -fx-background-radius: 6;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #b71c1c;
+}
